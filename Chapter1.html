@@ -11902,16 +11902,17 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">reverseComplement</span><span class="p">(</span><span class="n">DNA</span><span class="p">):</span>
     <span class="n">DNA</span> <span class="o">=</span> <span class="n">DNA</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">reverse</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">neucleotide</span> <span class="ow">in</span> <span class="n">DNA</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">neucleotide</span> <span class="o">==</span> <span class="s1">&#39;A&#39;</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span>
+            <span class="n">reverse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">neucleotide</span> <span class="o">==</span> <span class="s1">&#39;T&#39;</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span>
+            <span class="n">reverse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">neucleotide</span> <span class="o">==</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span>
+            <span class="n">reverse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;G&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">neucleotide</span> <span class="o">==</span> <span class="s1">&#39;G&#39;</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span>
-
+            <span class="n">reverse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reverse</span><span class="p">)</span>
 <span class="n">reverseComplement</span><span class="p">(</span><span class="s2">&quot;AAAACCCGGT&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -11927,7 +11928,7 @@ div#notebook {
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>A C C G G G T T T T
+<pre>ACCGGGTTTT
 </pre>
 </div>
 </div>
