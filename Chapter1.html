@@ -12152,7 +12152,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">hammingDistance</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq2</span><span class="p">):</span>
@@ -12204,10 +12204,13 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#হয়নাই</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#Still Needs Clarification : https://gist.github.com/alec-djinn/9018370</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+
 <span class="k">def</span> <span class="nf">hammingDistance</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq2</span><span class="p">):</span>
     <span class="n">difference</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">ch1</span><span class="p">,</span> <span class="n">ch2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq2</span><span class="p">):</span>
@@ -12216,17 +12219,41 @@ div#notebook {
     <span class="k">return</span> <span class="n">difference</span>
 
 <span class="k">def</span> <span class="nf">findKMer</span><span class="p">(</span><span class="n">Genome</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
-    <span class="n">freqKmer</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Genome</span><span class="p">)</span><span class="o">-</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">kmer_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Genome</span><span class="p">)</span><span class="o">-</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
         <span class="n">kmer</span> <span class="o">=</span> <span class="n">Genome</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Genome</span><span class="p">)</span> <span class="o">-</span> <span class="n">k</span><span class="p">):</span>
-            <span class="n">window</span> <span class="o">=</span> <span class="n">Genome</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="n">k</span><span class="p">]</span>
-            <span class="k">if</span><span class="p">(</span><span class="n">hammingDistance</span><span class="p">(</span><span class="n">kmer</span><span class="p">,</span><span class="n">window</span><span class="p">)</span><span class="o">&lt;</span><span class="n">d</span><span class="p">):</span>
-                <span class="n">freqKmer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kmer</span><span class="p">)</span>
-    <span class="n">freqKmer</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-    <span class="k">print</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">freqKmer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kmer</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kmer_dict</span><span class="p">:</span>
+            <span class="n">kmer_dict</span><span class="p">[</span><span class="n">kmer</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kmer_dict</span><span class="p">[</span><span class="n">kmer</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">kmer_dict_with_mismatches</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">kmer</span> <span class="ow">in</span> <span class="n">kmer_dict</span><span class="p">:</span>
+        <span class="n">kmer_dict_with_mismatches</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">kmer</span><span class="p">:[]})</span>
+        <span class="k">for</span> <span class="n">other_kmer</span> <span class="ow">in</span> <span class="n">kmer_dict</span><span class="p">:</span>
+            <span class="n">mismatches</span> <span class="o">=</span> <span class="n">hammingDistance</span><span class="p">(</span><span class="n">kmer</span><span class="p">,</span><span class="n">other_kmer</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mismatches</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">:</span>
+                <span class="n">kmer_dict_with_mismatches</span><span class="p">[</span><span class="n">kmer</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">other_kmer</span><span class="p">,</span><span class="n">kmer_dict</span><span class="p">[</span><span class="n">other_kmer</span><span class="p">]])</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">kmer_dict_with_mismatches</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">motif</span> <span class="ow">in</span> <span class="n">kmer_dict_with_mismatches</span><span class="p">[</span><span class="n">item</span><span class="p">]:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="n">motif</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">tmp</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">item</span><span class="p">:</span><span class="n">count</span><span class="p">})</span>
     
-<span class="n">findKMer</span><span class="p">(</span><span class="s2">&quot;ACGTTGCATGTCGCATGATGCATGAGAGCT&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+    
+    <span class="n">commons</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="n">_max</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">==</span> <span class="n">_max</span><span class="p">:</span>
+            <span class="n">commons</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">item</span><span class="p">:</span><span class="n">result</span><span class="p">[</span><span class="n">item</span><span class="p">]})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">commons</span>
+    <span class="k">return</span> <span class="n">result</span>
+    
+<span class="n">result</span> <span class="o">=</span> <span class="n">findKMer</span><span class="p">(</span><span class="s2">&quot;ACGTTGCATGTCGCATGATGCATGAGAGCT&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">kmer</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">kmer</span><span class="p">,</span>
 </pre></div>
 
 </div>
@@ -12241,7 +12268,7 @@ div#notebook {
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>ACGT AGAG ATGA ATGA ATGA ATGA ATGC ATGT CATG CATG CATG CATG CATG CATG CATG CATG CATG CGCA CGTT GAGA GAGC GATG GCAT GCAT GCAT GCAT GCAT GCAT GCAT GCAT GCAT GTCG GTTG TCGC TGAG TGAT TGCA TGCA TGCA TGCA TGTC TTGC
+<pre>ATGC ATGT GATG
 </pre>
 </div>
 </div>
