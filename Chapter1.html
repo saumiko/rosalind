@@ -11798,7 +11798,6 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">PatternCount</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="n">Pattern</span><span class="p">):</span>
-    <span class="c1">#Set the number of</span>
     <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Text</span><span class="p">)):</span>
@@ -12312,7 +12311,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
@@ -12354,6 +12353,78 @@ div#notebook {
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA1L: Implement PatternToNumber</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#Problem solved using recursion</span>
+
+<span class="n">dna</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">0</span> <span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;G&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+<span class="k">def</span> <span class="nf">PatternToNumber</span><span class="p">(</span><span class="n">pattern</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="n">sym</span> <span class="o">=</span> <span class="n">pattern</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#T G A</span>
+    <span class="n">pref</span> <span class="o">=</span> <span class="n">pattern</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#AG A _ </span>
+    <span class="k">return</span> <span class="mi">4</span><span class="o">*</span><span class="n">PatternToNumber</span><span class="p">(</span><span class="n">pref</span><span class="p">)</span><span class="o">+</span><span class="n">dna</span><span class="p">[</span><span class="n">sym</span><span class="p">]</span> <span class="c1">#4*2+3 4*0+2 4*0+0</span>
+
+<span class="k">print</span> <span class="n">PatternToNumber</span><span class="p">(</span><span class="s2">&quot;AGT&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>11
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA1M: Implement NumberToPattern</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+</div>
 </div>
 </div>
 
