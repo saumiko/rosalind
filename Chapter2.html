@@ -11956,6 +11956,188 @@ GAC
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA2D: Implement GreedyMotifSearch</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#Incomplete</span>
+<span class="c1">#Implementing http://www.mrgraeme.co.uk/greedy-motif-search/</span>
+<span class="k">def</span> <span class="nf">GreedyMotifSearch</span><span class="p">(</span><span class="n">DNA</span><span class="p">,</span> <span class="n">k</span> <span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">bestMotifs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="n">bestMotifs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DNA</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="p">])</span>
+    <span class="n">motif</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DNA</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+        <span class="n">motif</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DNA</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">])</span>
+    <span class="k">print</span> <span class="n">motif</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">DNA</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GGCGTTCAGGCA&quot;</span><span class="p">,</span><span class="s2">&quot;AAGAATCAGTCA&quot;</span><span class="p">,</span><span class="s2">&quot;CAAGGAGTTCGC&quot;</span><span class="p">,</span><span class="s2">&quot;CACGTCAATCAC&quot;</span><span class="p">,</span><span class="s2">&quot;CAATAATATTCG&quot;</span><span class="p">]</span>
+<span class="n">GreedyMotifSearch</span><span class="p">(</span><span class="n">DNA</span><span class="p">,</span> <span class="n">k</span> <span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;GGC&#39;, &#39;GCG&#39;, &#39;CGT&#39;, &#39;GTT&#39;, &#39;TTC&#39;, &#39;TCA&#39;, &#39;CAG&#39;, &#39;AGG&#39;, &#39;GGC&#39;, &#39;GCA&#39;, &#39;CA&#39;, &#39;A&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA2E:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA2F:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA2G:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA2H: Implement DistanceBetweenPatternAndStrings</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">HammingDistance</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq2</span><span class="p">):</span>
+    <span class="n">difference</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">ch1</span><span class="p">,</span> <span class="n">ch2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq2</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ch1</span> <span class="o">!=</span> <span class="n">ch2</span><span class="p">:</span>
+            <span class="n">difference</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">difference</span>
+
+<span class="k">def</span> <span class="nf">DistanceBetweenPatternAndStrings</span><span class="p">(</span><span class="n">Pattern</span><span class="p">,</span> <span class="n">DNA</span><span class="p">):</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">)</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">DNA</span><span class="p">:</span>
+        <span class="n">hammingdistance</span> <span class="o">=</span> <span class="mi">999999999</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">Pattern_</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="n">hammingdistance</span> <span class="o">&gt;</span> <span class="n">HammingDistance</span><span class="p">(</span><span class="n">Pattern_</span><span class="p">,</span><span class="n">Pattern</span><span class="p">):</span>
+                <span class="n">hammingdistance</span> <span class="o">=</span> <span class="n">HammingDistance</span><span class="p">(</span><span class="n">Pattern_</span><span class="p">,</span><span class="n">Pattern</span><span class="p">)</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">distance</span> <span class="o">+</span> <span class="n">hammingdistance</span>
+    <span class="k">print</span> <span class="n">distance</span>
+    
+<span class="n">Pattern</span> <span class="o">=</span> <span class="s2">&quot;AAA&quot;</span>
+<span class="n">DNA</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TTACCTTAAC&quot;</span><span class="p">,</span> <span class="s2">&quot;GATATCTGTC&quot;</span><span class="p">,</span> <span class="s2">&quot;ACGGCGTTCG&quot;</span><span class="p">,</span> <span class="s2">&quot;CCCTAAAGAG&quot;</span><span class="p">,</span> <span class="s2">&quot;CGTCAGAGGT&quot;</span><span class="p">]</span>
+<span class="n">DistanceBetweenPatternAndStrings</span><span class="p">(</span><span class="n">Pattern</span><span class="p">,</span> <span class="n">DNA</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>5
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
