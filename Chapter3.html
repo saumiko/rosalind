@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Chapter 2 Assignment</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Chapter 3 Assignment</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11778,7 +11778,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Chapter-2">Chapter 2<a class="anchor-link" href="#Chapter-2">&#182;</a></h1>
+<h1 id="Chapter-3">Chapter 3<a class="anchor-link" href="#Chapter-3">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -11787,20 +11787,50 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>BA2A: Implement MotifEnumeration</p>
+<p>BA3A: Generate the k-mer Composition of a String</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">Composition</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">DNA</span><span class="p">):</span>
+    <span class="n">kmer</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DNA</span><span class="p">)</span><span class="o">-</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">kmer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DNA</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">])</span>
+    <span class="n">kmer</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">kmer</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">text</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">DNA</span> <span class="o">=</span> <span class="s2">&quot;CAATCCAAC&quot;</span>
+<span class="n">Composition</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">DNA</span><span class="p">)</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>AATCC
+ATCCA
+CAATC
+CCAAC
+TCCAA
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -11810,7 +11840,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>BA2B: Find a Median String</p>
+<p>BA3B: Reconstruct a String from its Genome Path</p>
 
 </div>
 </div>
@@ -11820,119 +11850,17 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
-
-<span class="k">def</span> <span class="nf">hammingDistance</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span><span class="n">seq2</span><span class="p">):</span>
-    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq1</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">seq1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">seq2</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-            <span class="n">cnt</span> <span class="o">=</span> <span class="n">cnt</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">cnt</span>
-
-<span class="k">def</span> <span class="nf">PatternCount</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="n">Pattern</span><span class="p">):</span>
-    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">)</span>
-    <span class="n">mn</span> <span class="o">=</span> <span class="mi">9999</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">str</span> <span class="o">=</span> <span class="n">Text</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">length</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">hammingDistance</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">Pattern</span><span class="p">)</span><span class="o">&lt;</span><span class="n">mn</span><span class="p">:</span>
-            <span class="n">mn</span> <span class="o">=</span> <span class="n">hammingDistance</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">Pattern</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">mn</span>
-
-<span class="k">def</span> <span class="nf">MedianString</span><span class="p">(</span><span class="n">Pattern</span><span class="p">,</span> <span class="n">DNA</span><span class="p">):</span>
-    <span class="n">kmers</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="s2">&quot;ATGC&quot;</span><span class="p">,</span> <span class="n">repeat</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">)]</span>
-    <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">:</span>
-        <span class="n">patternSum</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">dna</span> <span class="ow">in</span> <span class="n">DNA</span><span class="p">:</span>
-            <span class="n">patternSum</span> <span class="o">+=</span> <span class="n">PatternCount</span><span class="p">(</span><span class="n">dna</span><span class="p">,</span><span class="n">pattern</span><span class="p">)</span>
-        <span class="n">kmers</span><span class="p">[</span><span class="n">pattern</span><span class="p">]</span> <span class="o">=</span> <span class="n">patternSum</span>
-    <span class="n">k</span> <span class="o">=</span> <span class="n">kmers</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">kmer</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kmers</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="n">result</span><span class="p">:</span>
-            <span class="k">print</span> <span class="n">kmer</span>
-    
-<span class="n">DNA</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;AAATTGACGCAT&quot;</span><span class="p">,</span><span class="s2">&quot;GACGACCACGTT&quot;</span><span class="p">,</span><span class="s2">&quot;CGTCAGCGCCTG&quot;</span><span class="p">,</span><span class="s2">&quot;GCTGAGCACCGG&quot;</span><span class="p">,</span><span class="s2">&quot;AGTACGGGACAG&quot;</span><span class="p">]</span>
-<span class="n">MedianString</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">DNA</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>ACG
-GAC
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA2C: Find a Profile-most Probable k-mer in a String</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">ProfileMostProbableKmer</span><span class="p">(</span><span class="n">DNA</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
-    <span class="n">tempMax</span><span class="o">=-</span><span class="mi">1</span>
-    <span class="n">num</span><span class="o">=-</span><span class="mi">1</span>
-    <span class="n">tempRes</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-    <span class="n">finalResult</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DNA</span><span class="p">)</span><span class="o">-</span><span class="n">k</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
-            <span class="n">c</span><span class="o">=</span><span class="n">DNA</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">c</span><span class="o">==</span><span class="s1">&#39;A&#39;</span><span class="p">:</span>
-                <span class="n">tempMax</span><span class="o">=</span><span class="n">tempMax</span><span class="o">+</span><span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
-                <span class="n">tempRes</span><span class="o">=</span> <span class="n">tempRes</span><span class="o">+</span><span class="n">c</span>
-            <span class="k">elif</span> <span class="n">c</span><span class="o">==</span><span class="s1">&#39;C&#39;</span><span class="p">:</span>
-                <span class="n">tempMax</span><span class="o">=</span><span class="n">tempMax</span><span class="o">+</span><span class="n">profile</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
-                <span class="n">tempRes</span><span class="o">=</span><span class="n">tempRes</span><span class="o">+</span><span class="n">c</span>
-            <span class="k">elif</span> <span class="n">c</span><span class="o">==</span><span class="s1">&#39;G&#39;</span><span class="p">:</span>
-                <span class="n">tempMax</span><span class="o">=</span><span class="n">tempMax</span><span class="o">+</span><span class="n">profile</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
-                <span class="n">tempRes</span><span class="o">=</span><span class="n">tempRes</span><span class="o">+</span><span class="n">c</span>
-            <span class="k">elif</span> <span class="n">c</span><span class="o">==</span><span class="s1">&#39;T&#39;</span><span class="p">:</span>
-                <span class="n">tempMax</span><span class="o">=</span><span class="n">tempMax</span><span class="o">+</span><span class="n">profile</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
-                <span class="n">tempRes</span><span class="o">=</span><span class="n">tempRes</span><span class="o">+</span><span class="n">c</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">tempMax</span><span class="o">&gt;</span><span class="n">num</span><span class="p">):</span>
-            <span class="n">num</span><span class="o">=</span><span class="n">tempMax</span>
-            <span class="n">finalResult</span><span class="o">=</span><span class="n">tempRes</span>
-            <span class="n">tempRes</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-            <span class="n">tempMax</span><span class="o">=-</span><span class="mi">1</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">Reconstruct</span><span class="p">(</span><span class="n">Path</span><span class="p">):</span>
+    <span class="n">Genome</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Path</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">Genome</span> <span class="o">=</span> <span class="n">Genome</span> <span class="o">+</span> <span class="n">Path</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">tempMax</span><span class="o">=-</span><span class="mi">1</span>
-            <span class="n">tempRes</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">finalResult</span><span class="p">)</span>
+            <span class="n">Genome</span> <span class="o">=</span> <span class="n">Genome</span> <span class="o">+</span> <span class="n">Path</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">Path</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">Path</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span>
+    <span class="k">print</span> <span class="n">Genome</span>
 
-<span class="n">DNA</span><span class="o">=</span><span class="s2">&quot;ACCTGTTTATTGCCTAAGTTCCGAACAAACCCAATATAGCCCGAGGGCCT&quot;</span>
-<span class="n">k</span><span class="o">=</span><span class="mi">5</span>
-<span class="n">profile</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
-    <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
-    <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span>
-    <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span>
-<span class="p">]</span>
-<span class="n">ProfileMostProbableKmer</span><span class="p">(</span><span class="n">DNA</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">profile</span><span class="p">)</span>
+<span class="n">Path</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ACCGA&quot;</span><span class="p">,</span> <span class="s2">&quot;CCGAA&quot;</span><span class="p">,</span> <span class="s2">&quot;CGAAG&quot;</span><span class="p">,</span> <span class="s2">&quot;GAAGC&quot;</span><span class="p">,</span> <span class="s2">&quot;AAGCT&quot;</span><span class="p">]</span>
+<span class="n">Reconstruct</span><span class="p">(</span><span class="n">Path</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11947,7 +11875,7 @@ GAC
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CCGAG
+<pre>ACCGAAGCT
 </pre>
 </div>
 </div>
@@ -11961,160 +11889,31 @@ GAC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>BA2D: Implement GreedyMotifSearch</p>
+<p>BA3C: Construct the Overlap Graph of a Collection of k-mers</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#Incomplete</span>
-<span class="c1">#Implementing http://www.mrgraeme.co.uk/greedy-motif-search/</span>
-<span class="k">def</span> <span class="nf">GreedyMotifSearch</span><span class="p">(</span><span class="n">DNA</span><span class="p">,</span> <span class="n">k</span> <span class="p">,</span> <span class="n">t</span><span class="p">):</span>
-    <span class="n">bestMotifs</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-        <span class="n">bestMotifs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DNA</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="p">])</span>
-    <span class="n">motif</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DNA</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
-        <span class="n">motif</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DNA</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">])</span>
-    <span class="k">print</span> <span class="n">motif</span>
-
-<span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">t</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">DNA</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GGCGTTCAGGCA&quot;</span><span class="p">,</span><span class="s2">&quot;AAGAATCAGTCA&quot;</span><span class="p">,</span><span class="s2">&quot;CAAGGAGTTCGC&quot;</span><span class="p">,</span><span class="s2">&quot;CACGTCAATCAC&quot;</span><span class="p">,</span><span class="s2">&quot;CAATAATATTCG&quot;</span><span class="p">]</span>
-<span class="n">GreedyMotifSearch</span><span class="p">(</span><span class="n">DNA</span><span class="p">,</span> <span class="n">k</span> <span class="p">,</span> <span class="n">t</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;GGC&#39;, &#39;GCG&#39;, &#39;CGT&#39;, &#39;GTT&#39;, &#39;TTC&#39;, &#39;TCA&#39;, &#39;CAG&#39;, &#39;AGG&#39;, &#39;GGC&#39;, &#39;GCA&#39;, &#39;CA&#39;, &#39;A&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA2E: Implement GreedyMotifSearch with Pseudocounts</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA2F: Implement RandomizedMotifSearch</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA2G: Implement GibbsSampler</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA2H: Implement DistanceBetweenPatternAndStrings</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">HammingDistance</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq2</span><span class="p">):</span>
-    <span class="n">difference</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">ch1</span><span class="p">,</span> <span class="n">ch2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq2</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">ch1</span> <span class="o">!=</span> <span class="n">ch2</span><span class="p">:</span>
-            <span class="n">difference</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">difference</span>
-
-<span class="k">def</span> <span class="nf">DistanceBetweenPatternAndStrings</span><span class="p">(</span><span class="n">Pattern</span><span class="p">,</span> <span class="n">DNA</span><span class="p">):</span>
-    <span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">)</span>
-    <span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">DNA</span><span class="p">:</span>
-        <span class="n">hammingdistance</span> <span class="o">=</span> <span class="mi">999999999</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-            <span class="n">Pattern_</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">)]</span>
-            <span class="k">if</span> <span class="n">hammingdistance</span> <span class="o">&gt;</span> <span class="n">HammingDistance</span><span class="p">(</span><span class="n">Pattern_</span><span class="p">,</span><span class="n">Pattern</span><span class="p">):</span>
-                <span class="n">hammingdistance</span> <span class="o">=</span> <span class="n">HammingDistance</span><span class="p">(</span><span class="n">Pattern_</span><span class="p">,</span><span class="n">Pattern</span><span class="p">)</span>
-        <span class="n">distance</span> <span class="o">=</span> <span class="n">distance</span> <span class="o">+</span> <span class="n">hammingdistance</span>
-    <span class="k">print</span> <span class="n">distance</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">OverlapGraph</span><span class="p">(</span><span class="n">kmers</span><span class="p">):</span>
+    <span class="n">kmers</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">suffix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">kmer</span> <span class="ow">in</span> <span class="n">kmers</span><span class="p">:</span>
+        <span class="n">prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kmer</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">kmer</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">suffix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kmer</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">kmer</span><span class="p">)])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">suffix</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">suffix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">prefix</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="k">print</span> <span class="n">kmers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;-&gt;&quot;</span><span class="o">+</span><span class="n">kmers</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                
     
-<span class="n">Pattern</span> <span class="o">=</span> <span class="s2">&quot;AAA&quot;</span>
-<span class="n">DNA</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TTACCTTAAC&quot;</span><span class="p">,</span> <span class="s2">&quot;GATATCTGTC&quot;</span><span class="p">,</span> <span class="s2">&quot;ACGGCGTTCG&quot;</span><span class="p">,</span> <span class="s2">&quot;CCCTAAAGAG&quot;</span><span class="p">,</span> <span class="s2">&quot;CGTCAGAGGT&quot;</span><span class="p">]</span>
-<span class="n">DistanceBetweenPatternAndStrings</span><span class="p">(</span><span class="n">Pattern</span><span class="p">,</span> <span class="n">DNA</span><span class="p">)</span>
+<span class="n">kmers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ATGCG&quot;</span><span class="p">,</span><span class="s2">&quot;GCATG&quot;</span><span class="p">,</span><span class="s2">&quot;CATGC&quot;</span><span class="p">,</span><span class="s2">&quot;AGGCA&quot;</span><span class="p">,</span><span class="s2">&quot;GGCAT&quot;</span><span class="p">]</span>
+<span class="n">OverlapGraph</span><span class="p">(</span><span class="n">kmers</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12129,7 +11928,89 @@ GAC
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>5
+<pre>AGGCA-&gt;GGCAT
+CATGC-&gt;ATGCG
+GCATG-&gt;CATGC
+GGCAT-&gt;GCATG
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA3D: Construct the De Bruijn Graph of a String</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">Composition</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">DNA</span><span class="p">):</span>
+    <span class="n">kmer</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DNA</span><span class="p">)</span><span class="o">-</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">kmer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DNA</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">])</span>
+    <span class="n">kmer</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">kmer</span>
+
+<span class="k">def</span> <span class="nf">DeBruijn</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">DNA</span><span class="p">):</span>
+    <span class="n">composition</span> <span class="o">=</span> <span class="n">Composition</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">DNA</span><span class="p">)</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">suffix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">kmer</span> <span class="ow">in</span> <span class="n">composition</span><span class="p">:</span>
+        <span class="n">prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kmer</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">kmer</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">suffix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kmer</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">kmer</span><span class="p">)])</span>
+    <span class="n">uniqueprefix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">uniquesuffix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">pre</span> <span class="ow">in</span> <span class="n">prefix</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">pre</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">uniqueprefix</span><span class="p">:</span>
+            <span class="n">uniqueprefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pre</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">suf</span> <span class="ow">in</span> <span class="n">suffix</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">suf</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">uniquesuffix</span><span class="p">:</span>
+            <span class="n">uniquesuffix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">suf</span><span class="p">)</span>
+    <span class="n">debruijn</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">uniqueprefix</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">node</span> <span class="o">+</span> <span class="s1">&#39;-&gt;&#39;</span><span class="p">,</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">connectednode</span> <span class="ow">in</span> <span class="n">uniquesuffix</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="p">)]</span> <span class="o">==</span> <span class="n">connectednode</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">print</span> <span class="n">connectednode</span><span class="p">,</span>
+        <span class="k">print</span> <span class="s2">&quot; &quot;</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">DNA</span> <span class="o">=</span> <span class="s2">&quot;AAGATTCTCTAC&quot;</span>
+<span class="n">DeBruijn</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">DNA</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>AAG-&gt; AGA  
+AGA-&gt; GAT  
+ATT-&gt; TTC  
+CTA-&gt; TAC  
+CTC-&gt; TCT  
+GAT-&gt; ATT  
+TCT-&gt; CTA CTC  
+TTC-&gt; TCT  
 </pre>
 </div>
 </div>
