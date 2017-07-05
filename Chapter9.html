@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>2012331054_Chapter_4</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>2012331054_Chapter_9</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11778,7 +11778,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Chapter-4">Chapter 4<a class="anchor-link" href="#Chapter-4">&#182;</a></h1>
+<h1 id="Chapter-9">Chapter 9<a class="anchor-link" href="#Chapter-9">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -11787,24 +11787,45 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4A: Translate an RNA String into an Amino Acid String</p>
+<p>BA9A: Construct a Trie from a Collection of Patterns</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">Bio.Seq</span> <span class="kn">import</span> <span class="n">Seq</span>
-<span class="kn">from</span> <span class="nn">Bio.Alphabet</span> <span class="kn">import</span> <span class="n">generic_rna</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">TrieConstruction</span><span class="p">(</span><span class="n">Patterns</span><span class="p">):</span>
+    <span class="n">kmer</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">h</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">t</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">m</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">edgeH</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span>
+    <span class="n">edgeT</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">ans</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Patterns</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Patterns</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+            <span class="k">if</span> <span class="n">Patterns</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kmer</span><span class="p">:</span>
+                <span class="n">kmer</span><span class="o">+=</span><span class="p">[</span><span class="n">Patterns</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+                <span class="n">ans</span><span class="o">+=</span><span class="p">[</span><span class="n">Patterns</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Patterns</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">m</span><span class="o">=</span><span class="mi">0</span>
+                    <span class="n">h</span><span class="o">+=</span><span class="p">[</span><span class="n">m</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">s</span><span class="o">=</span><span class="n">Patterns</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">kmer</span><span class="p">)):</span>
+                        <span class="k">if</span> <span class="n">s</span><span class="o">==</span><span class="n">kmer</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span>
+                            <span class="n">h</span><span class="o">+=</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span>
+                <span class="n">n</span><span class="o">+=</span><span class="mi">1</span>
+                <span class="n">t</span><span class="o">+=</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ans</span><span class="p">)):</span>
+        <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">+</span><span class="s2">&quot;-&gt;&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">+</span><span class="s2">&quot;:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">ans</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-<span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="n">RNA</span><span class="p">):</span>
-    <span class="n">messenger_rna</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">RNA</span><span class="p">,</span> <span class="n">generic_rna</span><span class="p">)</span>
-    <span class="k">print</span> <span class="n">messenger_rna</span><span class="o">.</span><span class="n">translate</span><span class="p">()</span>
-    
-<span class="n">translate</span><span class="p">(</span><span class="s2">&quot;AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA&quot;</span><span class="p">)</span>
+<span class="n">Patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ATAGA&#39;</span><span class="p">,</span><span class="s1">&#39;ATC&#39;</span><span class="p">,</span><span class="s1">&#39;GAT&#39;</span><span class="p">]</span>
+<span class="n">TrieConstruction</span><span class="p">(</span><span class="n">Patterns</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11819,7 +11840,15 @@ div#notebook {
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>MAMAPRTEINSTRING*
+<pre>0-&gt;1:A
+1-&gt;2:T
+2-&gt;3:A
+3-&gt;4:G
+4-&gt;5:A
+2-&gt;6:C
+0-&gt;7:G
+7-&gt;8:A
+8-&gt;9:T
 </pre>
 </div>
 </div>
@@ -11833,561 +11862,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4B: Find Substrings of a Genome Encoding a Given Amino Acid String</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">Bio.Seq</span> <span class="kn">import</span> <span class="n">Seq</span>
-<span class="kn">from</span> <span class="nn">Bio.Alphabet</span> <span class="kn">import</span> <span class="n">generic_dna</span>
-
-<span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="n">dna</span><span class="p">):</span>
-    <span class="n">coding_dna</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">dna</span><span class="p">,</span> <span class="n">generic_dna</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">coding_dna</span><span class="o">.</span><span class="n">translate</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="n">aminoacid</span><span class="p">,</span> <span class="n">inaminoacid</span><span class="p">):</span>
-    <span class="n">occurances</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">inaminoacid</span><span class="p">,</span> <span class="n">aminoacid</span><span class="p">)]</span>
-    <span class="k">return</span> <span class="n">occurances</span>
-
-<span class="k">def</span> <span class="nf">revseq</span><span class="p">(</span><span class="n">aminoacid</span><span class="p">,</span> <span class="n">DNA</span><span class="p">,</span> <span class="n">occurances</span><span class="p">):</span>
-    <span class="n">seqlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">aminoacid</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">occurances</span><span class="p">:</span>
-        <span class="k">print</span> <span class="n">DNA</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">seqlen</span><span class="p">]</span>
-
-<span class="n">dna</span> <span class="o">=</span> <span class="s2">&quot;ATGGCCATGGCCCCCAGAACTGAGATCAATAGTACCCGTATTAACGGGTGA&quot;</span>
-<span class="n">inaminoacid</span> <span class="o">=</span> <span class="s2">&quot;MA&quot;</span>
-<span class="n">aminoacid</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span><span class="n">dna</span><span class="p">)</span>
-<span class="n">revseq</span><span class="p">(</span><span class="n">inaminoacid</span><span class="p">,</span> <span class="n">dna</span><span class="p">,</span> <span class="n">match</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">aminoacid</span><span class="p">),</span> <span class="n">inaminoacid</span><span class="p">))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>ATGGCC
-GGCCAT
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4C: Generate the Theoretical Spectrum of a Cyclic Peptide</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">cycle</span><span class="p">,</span><span class="n">islice</span>
-<span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;G&#39;</span><span class="p">:</span><span class="mi">57</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">71</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="mi">87</span><span class="p">,</span><span class="s1">&#39;P&#39;</span><span class="p">:</span><span class="mi">97</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">103</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span><span class="s1">&#39;N&#39;</span><span class="p">:</span><span class="mi">114</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">:</span><span class="mi">115</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span><span class="s1">&#39;Q&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span><span class="s1">&#39;E&#39;</span><span class="p">:</span><span class="mi">129</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mi">131</span><span class="p">,</span><span class="s1">&#39;H&#39;</span><span class="p">:</span><span class="mi">137</span><span class="p">,</span><span class="s1">&#39;F&#39;</span><span class="p">:</span><span class="mi">147</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">:</span><span class="mi">156</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="mi">163</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="mi">186</span><span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">getTotalMass</span><span class="p">(</span><span class="n">peptidestr</span><span class="p">):</span>
-    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">peptidestr</span><span class="p">:</span>
-        <span class="n">total</span><span class="o">+=</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">total</span>
-
-<span class="k">def</span> <span class="nf">getTheoreticalSpectrum</span><span class="p">(</span><span class="n">peptide</span><span class="p">):</span>
-    <span class="n">peptides</span><span class="o">=</span><span class="p">[]</span>
-    <span class="n">values</span><span class="o">=</span><span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">peptide</span><span class="p">)):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">peptide</span><span class="p">)):</span>
-            <span class="n">c</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span>
-            <span class="n">val</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span> <span class="n">islice</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="p">))</span>
-            <span class="n">peptides</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
-            <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">getTotalMass</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
-    <span class="n">peptides</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span>
-    <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">getTotalMass</span><span class="p">(</span><span class="n">peptide</span><span class="p">))</span>
-    <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">values</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
-            <span class="k">continue</span><span class="p">;</span>
-        <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
-
-<span class="n">peptidecode</span> <span class="o">=</span> <span class="s1">&#39;LEQN&#39;</span>
-<span class="n">getTheoreticalSpectrum</span><span class="p">(</span><span class="n">peptidecode</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>0 113 114 128 129 227 242 242 257 355 356 370 371 484
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4D: Compute the Number of Peptides of Given Total Mass</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;G&#39;</span><span class="p">:</span><span class="mi">57</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">71</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="mi">87</span><span class="p">,</span><span class="s1">&#39;P&#39;</span><span class="p">:</span><span class="mi">97</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">103</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span><span class="s1">&#39;N&#39;</span><span class="p">:</span><span class="mi">114</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">:</span><span class="mi">115</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span><span class="s1">&#39;Q&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span><span class="s1">&#39;E&#39;</span><span class="p">:</span><span class="mi">129</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mi">131</span><span class="p">,</span><span class="s1">&#39;H&#39;</span><span class="p">:</span><span class="mi">137</span><span class="p">,</span><span class="s1">&#39;F&#39;</span><span class="p">:</span><span class="mi">147</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">:</span><span class="mi">156</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="mi">163</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="mi">186</span><span class="p">}</span>
-<span class="n">val</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-
-<span class="k">def</span> <span class="nf">peptideCounter</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
-    <span class="n">counts</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="o">-</span><span class="nb">min</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="nb">min</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">j</span><span class="o">-</span><span class="n">v</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
-                <span class="n">counts</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="n">counts</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="n">v</span><span class="p">]</span>
-    <span class="k">print</span> <span class="n">counts</span><span class="p">[</span><span class="n">M</span><span class="p">]</span>
-<span class="n">peptideCounter</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>14712706211
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4E: Find a Cyclic Peptide with Theoretical Spectrum Matching an Ideal Spectrum</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4F: Compute the Score of a Cyclic Peptide Against a Spectrum</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">cycle</span><span class="p">,</span><span class="n">islice</span>
-<span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;G&#39;</span><span class="p">:</span><span class="mi">57</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">71</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="mi">87</span><span class="p">,</span><span class="s1">&#39;P&#39;</span><span class="p">:</span><span class="mi">97</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">103</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span><span class="s1">&#39;N&#39;</span><span class="p">:</span><span class="mi">114</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">:</span><span class="mi">115</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span><span class="s1">&#39;Q&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span><span class="s1">&#39;E&#39;</span><span class="p">:</span><span class="mi">129</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mi">131</span><span class="p">,</span><span class="s1">&#39;H&#39;</span><span class="p">:</span><span class="mi">137</span><span class="p">,</span><span class="s1">&#39;F&#39;</span><span class="p">:</span><span class="mi">147</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">:</span><span class="mi">156</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="mi">163</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="mi">186</span><span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">getTotalMass</span><span class="p">(</span><span class="n">peptidestr</span><span class="p">):</span>
-    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">peptidestr</span><span class="p">:</span>
-        <span class="n">total</span><span class="o">+=</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">total</span>
-
-<span class="k">def</span> <span class="nf">getTheoreticalSpectrum</span><span class="p">(</span><span class="n">peptide</span><span class="p">,</span> <span class="n">spectrum</span><span class="p">):</span>
-    <span class="n">peptides</span><span class="o">=</span><span class="p">[]</span>
-    <span class="n">values</span><span class="o">=</span><span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">peptide</span><span class="p">)):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">peptide</span><span class="p">)):</span>
-            <span class="n">c</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span>
-            <span class="n">val</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span> <span class="n">islice</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="p">))</span>
-            <span class="n">peptides</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
-            <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">getTotalMass</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
-    <span class="n">peptides</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span>
-    <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">getTotalMass</span><span class="p">(</span><span class="n">peptide</span><span class="p">))</span>
-    <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">values</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">spectrum</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="p">:</span>
-                <span class="n">score</span> <span class="o">=</span> <span class="n">score</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
-                <span class="n">score</span> <span class="o">=</span> <span class="n">score</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">print</span> <span class="n">score</span>
-<span class="n">peptidecode</span> <span class="o">=</span> <span class="s1">&#39;LEQN&#39;</span>
-<span class="n">spectrum</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">227</span><span class="p">,</span> <span class="mi">257</span><span class="p">,</span> <span class="mi">299</span><span class="p">,</span> <span class="mi">355</span><span class="p">,</span> <span class="mi">356</span><span class="p">,</span> <span class="mi">370</span><span class="p">,</span> <span class="mi">371</span><span class="p">,</span> <span class="mi">484</span><span class="p">]</span>
-<span class="n">getTheoreticalSpectrum</span><span class="p">(</span><span class="n">peptidecode</span><span class="p">,</span> <span class="n">spectrum</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>11
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4G: Implement LeaderboardCyclopeptideSequencing</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="n">peptide_to_mass</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;&#39;</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span><span class="mi">129</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">:</span><span class="mi">114</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">:</span><span class="mi">57</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">71</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="mi">87</span><span class="p">,</span><span class="s1">&#39;P&#39;</span><span class="p">:</span><span class="mi">97</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">103</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">:</span><span class="mi">115</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mi">131</span><span class="p">,</span><span class="s1">&#39;H&#39;</span><span class="p">:</span><span class="mi">137</span><span class="p">,</span><span class="s1">&#39;F&#39;</span><span class="p">:</span><span class="mi">147</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">:</span><span class="mi">156</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="mi">163</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="mi">186</span><span class="p">}</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">spectrum</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">129</span><span class="p">,</span> <span class="mi">147</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">218</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="mi">313</span><span class="p">,</span> <span class="mi">331</span><span class="p">,</span> <span class="mi">347</span><span class="p">,</span> <span class="mi">389</span><span class="p">,</span> <span class="mi">460</span><span class="p">]</span>
-<span class="n">leaderboard</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">leaderboard</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-<span class="n">leaderscore</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">leaderpeptide</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-<span class="k">def</span> <span class="nf">cut</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">):</span>
-    <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">lead</span> <span class="ow">in</span> <span class="n">leaderboard</span><span class="p">:</span>
-        <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">getscore</span><span class="p">(</span><span class="n">lead</span><span class="p">))</span>
-    <span class="n">scores</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-    <span class="n">nthhighestscore</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-        <span class="n">nthhighestscore</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span><span class="o">&gt;=</span><span class="n">n</span><span class="p">:</span>
-        <span class="n">nthhighestscore</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span><span class="o">-</span><span class="n">n</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">nthhighestscore</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">lead</span> <span class="ow">in</span> <span class="n">leaderboard</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">getscore</span><span class="p">(</span><span class="n">lead</span><span class="p">)</span><span class="o">&gt;=</span><span class="n">nthhighestscore</span><span class="p">:</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lead</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span>
-
-<span class="k">def</span> <span class="nf">expandpeps</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">):</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">)):</span>
-        <span class="n">curr</span> <span class="o">=</span> <span class="n">leaderboard</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">peptide_to_mass</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr</span><span class="o">+</span><span class="n">key</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span>
-
-<span class="k">def</span> <span class="nf">getmass</span><span class="p">(</span><span class="n">peptide</span><span class="p">):</span>
-    <span class="n">totalmass</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">pep</span> <span class="ow">in</span> <span class="n">peptide</span><span class="p">:</span>
-        <span class="n">totalmass</span> <span class="o">+=</span> <span class="n">peptide_to_mass</span><span class="p">[</span><span class="n">pep</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">totalmass</span>
-
-<span class="k">def</span> <span class="nf">getscore</span><span class="p">(</span><span class="n">peptide</span><span class="p">):</span>
-    <span class="n">peptidespectrum</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-    <span class="n">peptidespectrum</span> <span class="o">=</span> <span class="n">GenTheoriticalSpec</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span>
-    <span class="n">total_score</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">peptidespectrum</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="n">has</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">val</span><span class="o">==</span><span class="n">value</span><span class="p">:</span>
-                <span class="n">has</span> <span class="o">=</span> <span class="bp">True</span>
-                <span class="k">break</span>
-        <span class="k">if</span> <span class="n">has</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
-            <span class="n">total_score</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">total_score</span>
-
-<span class="k">def</span> <span class="nf">GenTheoriticalSpec</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
-    <span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;&#39;</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span><span class="mi">129</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">:</span><span class="mi">114</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">:</span><span class="mi">57</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">71</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="mi">87</span><span class="p">,</span><span class="s1">&#39;P&#39;</span><span class="p">:</span><span class="mi">97</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">103</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">:</span><span class="mi">115</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mi">131</span><span class="p">,</span><span class="s1">&#39;H&#39;</span><span class="p">:</span><span class="mi">137</span><span class="p">,</span><span class="s1">&#39;F&#39;</span><span class="p">:</span><span class="mi">147</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">:</span><span class="mi">156</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="mi">163</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="mi">186</span><span class="p">}</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-    <span class="n">alist</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">length</span><span class="p">):</span>
-            <span class="n">subpeptide</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-            <span class="n">subpeptide</span> <span class="o">=</span> <span class="n">string</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">j</span><span class="o">==</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">subpeptide</span><span class="p">)</span><span class="o">&lt;</span><span class="n">length</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">subpeptide</span><span class="p">)):</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">subpeptide</span><span class="p">)</span><span class="o">!=</span><span class="n">length</span><span class="p">:</span>
-                        <span class="n">sm</span> <span class="o">=</span> <span class="mi">0</span>
-                        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">subpeptide</span><span class="p">)):</span>
-                            <span class="n">sm</span> <span class="o">=</span> <span class="n">sm</span> <span class="o">+</span> <span class="n">dic</span><span class="p">[</span><span class="n">subpeptide</span><span class="p">[</span><span class="n">ii</span><span class="p">]]</span>
-                        <span class="n">alist</span><span class="p">[</span><span class="n">subpeptide</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sm</span><span class="p">)</span>
-                    <span class="n">subpeptide</span><span class="o">+=</span><span class="n">string</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">subpeptide</span><span class="p">)</span><span class="o">!=</span><span class="n">length</span><span class="p">:</span>
-                <span class="n">sm</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">subpeptide</span><span class="p">)):</span>
-                    <span class="n">sm</span> <span class="o">=</span> <span class="n">sm</span> <span class="o">+</span> <span class="n">dic</span><span class="p">[</span><span class="n">subpeptide</span><span class="p">[</span><span class="n">ii</span><span class="p">]]</span>
-                <span class="n">alist</span><span class="p">[</span><span class="n">subpeptide</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sm</span><span class="p">)</span>
-    <span class="n">sm</span><span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)):</span>
-        <span class="n">sm</span> <span class="o">=</span> <span class="n">sm</span> <span class="o">+</span> <span class="n">dic</span><span class="p">[</span><span class="n">string</span><span class="p">[</span><span class="n">ii</span><span class="p">]]</span>
-    <span class="n">alist</span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sm</span><span class="p">)</span>
-    <span class="n">alist</span><span class="p">[</span><span class="s1">&#39;def&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">alist</span>
-<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
-    <span class="n">leaderboard</span> <span class="o">=</span> <span class="n">expandpeps</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">))</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">)):</span>
-            <span class="n">peptide</span> <span class="o">=</span> <span class="n">leaderboard</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">currmass</span> <span class="o">=</span> <span class="n">getmass</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">currmass</span> <span class="o">==</span> <span class="n">spectrum</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="n">currscore</span> <span class="o">=</span> <span class="n">getscore</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">currscore</span> <span class="o">&gt;</span> <span class="n">leaderscore</span><span class="p">:</span>
-                    <span class="n">leaderpeptide</span> <span class="o">=</span> <span class="n">peptide</span>
-                    <span class="n">leaderscore</span> <span class="o">=</span> <span class="n">currscore</span>
-            <span class="k">elif</span> <span class="n">currmass</span> <span class="o">&gt;</span> <span class="n">spectrum</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="n">leaderboard</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="n">asda</span> <span class="o">=</span> <span class="s2">&quot;as&quot;</span>
-    <span class="n">leaderboard</span> <span class="o">=</span> <span class="n">cut</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>21
-441
-9261
-190512
-2829729
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4H: Generate the Convolution of a Spectrum</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">operator</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-
-<span class="k">def</span> <span class="nf">convolute</span><span class="p">(</span><span class="n">spectrum</span><span class="p">):</span>
-    <span class="n">dic</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">spectrum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">spectrum</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">):</span>
-                <span class="n">dic</span><span class="p">[</span><span class="n">spectrum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">spectrum</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">spectrum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">spectrum</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">):</span>
-                <span class="n">dic</span><span class="p">[</span><span class="n">spectrum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">spectrum</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="nb">sorted</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">dic</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> &quot;</span><span class="o">%</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
-
-<span class="n">spectrum</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">137</span><span class="p">,</span> <span class="mi">186</span><span class="p">,</span> <span class="mi">323</span><span class="p">]</span>
-<span class="n">convolute</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>137 137 186 186 323 49 </pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4I: Implement ConvolutionCyclopeptideSequencing</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4J: Generate the Theoretical Spectrum of a Linear Peptide</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">TheoreticalSpectrum</span><span class="p">(</span><span class="n">peptide</span><span class="p">,</span> <span class="n">pep_to_mass</span><span class="p">):</span>
-    <span class="n">spectrum</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span><span class="o">-</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-            <span class="n">kmer</span> <span class="o">=</span> <span class="n">peptide</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">mass_sum</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">kmer</span><span class="p">:</span>
-                <span class="n">mass_sum</span> <span class="o">+=</span> <span class="n">pep_to_mass</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
-            <span class="n">spectrum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mass_sum</span><span class="p">)</span>
-    <span class="n">spectrum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">spectrum</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-    <span class="k">print</span> <span class="n">spectrum</span>
-    
-<span class="n">peptide</span> <span class="o">=</span> <span class="s2">&quot;NQEL&quot;</span>
-<span class="n">pep_to_mass</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span><span class="mi">129</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">:</span><span class="mi">114</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">:</span><span class="mi">57</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">71</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="mi">87</span><span class="p">,</span><span class="s1">&#39;P&#39;</span><span class="p">:</span><span class="mi">97</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">103</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">:</span><span class="mi">115</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mi">131</span><span class="p">,</span><span class="s1">&#39;H&#39;</span><span class="p">:</span><span class="mi">137</span><span class="p">,</span><span class="s1">&#39;F&#39;</span><span class="p">:</span><span class="mi">147</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">:</span><span class="mi">156</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="mi">163</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="mi">186</span><span class="p">}</span>
-<span class="n">TheoreticalSpectrum</span><span class="p">(</span><span class="n">peptide</span><span class="p">,</span> <span class="n">pep_to_mass</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[0, 113, 114, 128, 129, 242, 242, 257, 370, 371, 484]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4K: Compute the Score of a Linear Peptide</p>
+<p>BA9B: Implement TrieMatching</p>
 
 </div>
 </div>
@@ -12397,32 +11872,18 @@ GGCCAT
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">TheoreticalSpectrum</span><span class="p">(</span><span class="n">peptide</span><span class="p">,</span> <span class="n">pep_to_mass</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-    <span class="n">spectrum</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span><span class="o">-</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-            <span class="n">kmer</span> <span class="o">=</span> <span class="n">peptide</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">mass_sum</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">kmer</span><span class="p">:</span>
-                <span class="n">mass_sum</span> <span class="o">+=</span> <span class="n">pep_to_mass</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
-            <span class="n">spectrum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mass_sum</span><span class="p">)</span>
-    <span class="n">spectrum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">spectrum</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">spectrum</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="p">:</span>
-                <span class="n">score</span> <span class="o">=</span> <span class="n">score</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
-                <span class="n">score</span> <span class="o">=</span> <span class="n">score</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">print</span> <span class="n">score</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">TrieMatching</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="n">Pattern</span><span class="p">):</span>
+    <span class="n">ans</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">Pattern</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">Text</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">[</span><span class="n">i</span><span class="p">])]:</span>
+                <span class="n">ans</span><span class="o">+=</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="n">ans</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">ans</span>
 
-<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">227</span><span class="p">,</span> <span class="mi">257</span><span class="p">,</span> <span class="mi">299</span><span class="p">,</span> <span class="mi">355</span><span class="p">,</span> <span class="mi">356</span><span class="p">,</span> <span class="mi">370</span><span class="p">,</span> <span class="mi">371</span><span class="p">,</span> <span class="mi">484</span><span class="p">]</span>
-<span class="n">peptide</span> <span class="o">=</span> <span class="s2">&quot;NQEL&quot;</span>
-<span class="n">pep_to_mass</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span><span class="mi">129</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">:</span><span class="mi">114</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">:</span><span class="mi">57</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">71</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="mi">87</span><span class="p">,</span><span class="s1">&#39;P&#39;</span><span class="p">:</span><span class="mi">97</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">103</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">:</span><span class="mi">115</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mi">131</span><span class="p">,</span><span class="s1">&#39;H&#39;</span><span class="p">:</span><span class="mi">137</span><span class="p">,</span><span class="s1">&#39;F&#39;</span><span class="p">:</span><span class="mi">147</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">:</span><span class="mi">156</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="mi">163</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="mi">186</span><span class="p">}</span>
-<span class="n">TheoreticalSpectrum</span><span class="p">(</span><span class="n">peptide</span><span class="p">,</span> <span class="n">pep_to_mass</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+<span class="n">Text</span> <span class="o">=</span> <span class="s1">&#39;AATCGGGTTCAATCGGGGT&#39;</span>
+<span class="n">Pattern</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ATCG&#39;</span><span class="p">,</span><span class="s1">&#39;GGGT&#39;</span><span class="p">]</span>
+<span class="n">TrieMatching</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="n">Pattern</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12437,7 +11898,7 @@ GGCCAT
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>8
+<pre>[1, 4, 11, 15]
 </pre>
 </div>
 </div>
@@ -12451,85 +11912,7 @@ GGCCAT
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4L: Trim a Peptide Leaderboard</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">peptides</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LAST&quot;</span><span class="p">,</span> <span class="s2">&quot;ALST&quot;</span><span class="p">,</span> <span class="s2">&quot;TLLT&quot;</span><span class="p">,</span> <span class="s2">&quot;TQAS&quot;</span><span class="p">]</span>
-<span class="n">spectrum2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">158</span><span class="p">,</span> <span class="mi">184</span><span class="p">,</span> <span class="mi">188</span><span class="p">,</span> <span class="mi">259</span><span class="p">,</span> <span class="mi">271</span><span class="p">,</span> <span class="mi">372</span><span class="p">]</span>
-<span class="n">keep</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">pep_to_mass</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span><span class="mi">129</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">:</span><span class="mi">114</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">:</span><span class="mi">57</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">71</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="mi">87</span><span class="p">,</span><span class="s1">&#39;P&#39;</span><span class="p">:</span><span class="mi">97</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">:</span><span class="mi">99</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">103</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">:</span><span class="mi">113</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">:</span><span class="mi">115</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">:</span><span class="mi">128</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mi">131</span><span class="p">,</span><span class="s1">&#39;H&#39;</span><span class="p">:</span><span class="mi">137</span><span class="p">,</span><span class="s1">&#39;F&#39;</span><span class="p">:</span><span class="mi">147</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">:</span><span class="mi">156</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="mi">163</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="mi">186</span><span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">findscorepeptide</span><span class="p">(</span><span class="n">peptide</span><span class="p">,</span><span class="n">spectrum2</span><span class="p">):</span>
-    <span class="n">spectrum</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">peptide</span><span class="p">)</span><span class="o">-</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-            <span class="n">kmer</span> <span class="o">=</span> <span class="n">peptide</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">mass_sum</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">kmer</span><span class="p">:</span>
-                <span class="n">mass_sum</span> <span class="o">+=</span> <span class="n">pep_to_mass</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">mass_sum</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="p">:</span>
-                <span class="n">spectrum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mass_sum</span><span class="p">)</span>
-    <span class="n">spectrum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">mass1</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">mass2</span> <span class="ow">in</span> <span class="n">spectrum2</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">mass1</span><span class="o">==</span><span class="n">mass2</span><span class="p">:</span>
-                <span class="n">count</span><span class="o">+=</span><span class="mi">1</span>
-    <span class="k">return</span> <span class="n">count</span>
-
-<span class="n">peptide_score</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">pep</span> <span class="ow">in</span> <span class="n">peptides</span><span class="p">:</span>
-    <span class="n">peptide_score</span><span class="p">[</span><span class="n">pep</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">pep</span> <span class="ow">in</span> <span class="n">peptides</span><span class="p">:</span>
-    <span class="n">peptide_score</span><span class="p">[</span><span class="n">pep</span><span class="p">]</span> <span class="o">=</span> <span class="n">findscorepeptide</span><span class="p">(</span><span class="n">pep</span><span class="p">,</span><span class="n">spectrum2</span><span class="p">)</span>
-<span class="n">sorted_values</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">peptide_score</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">target</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sorted_values</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-    <span class="n">count</span><span class="o">+=</span><span class="mi">1</span>
-    <span class="k">if</span> <span class="n">count</span><span class="o">==</span><span class="n">keep</span><span class="p">:</span>
-        <span class="n">target</span> <span class="o">=</span> <span class="n">i</span>
-<span class="n">final_ans</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">peptide_score</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">value</span><span class="o">&gt;=</span><span class="n">sorted_values</span><span class="p">[</span><span class="n">target</span><span class="p">]:</span>
-        <span class="n">final_ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">final_ans</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;ALST&#39;, &#39;LAST&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>BA4M: Solve the Turnpike Problem</p>
+<p>BA9C: Construct the Suffix Tree of a String</p>
 
 </div>
 </div>
@@ -12543,6 +11926,363 @@ GGCCAT
 </pre></div>
 
 </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA9D: Find the Longest Repeat in a String</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">LongestRepeat</span><span class="p">(</span><span class="n">Text</span><span class="p">):</span>
+    <span class="n">kmer</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">l</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="n">l</span><span class="o">&gt;-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">Text</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kmer</span><span class="p">:</span>
+                <span class="n">kmer</span><span class="p">[</span><span class="n">Text</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">]]</span><span class="o">=</span><span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">kmer</span><span class="p">[</span><span class="n">Text</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">]]</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">l</span><span class="o">-=</span><span class="mi">1</span>
+    <span class="n">l</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">kmer</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">kmer</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">val</span><span class="o">==</span><span class="n">l</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">key</span>
+            <span class="k">break</span>
+
+<span class="n">Text</span><span class="o">=</span><span class="s1">&#39;ATATCGTTTTATCGTT&#39;</span>
+<span class="n">LongestRepeat</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>TTATCGTT
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA9E: Find the Longest Substring Shared by Two Strings</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">LongestSubstring</span><span class="p">(</span><span class="n">Text1</span><span class="p">,</span> <span class="n">Text2</span><span class="p">):</span>
+    <span class="n">kmer1</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">l</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">Text1</span><span class="p">)</span>
+    <span class="n">j</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="n">l</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">Text1</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kmer1</span><span class="p">:</span>
+                <span class="n">kmer1</span><span class="o">+=</span><span class="p">[</span><span class="n">Text1</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">]]</span>
+        <span class="n">l</span><span class="o">-=</span><span class="mi">1</span>
+        <span class="n">j</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="n">ans</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">l</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">Text2</span><span class="p">)</span>
+    <span class="n">j</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="n">l</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">Text2</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">]</span> <span class="ow">in</span> <span class="n">kmer1</span><span class="p">:</span>
+                <span class="k">print</span> <span class="n">Text2</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">]</span>
+                <span class="n">ans</span><span class="o">=</span><span class="mi">1</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">ans</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">l</span><span class="o">-=</span><span class="mi">1</span>
+        <span class="n">j</span><span class="o">+=</span><span class="mi">1</span>
+    
+<span class="n">Text1</span><span class="o">=</span><span class="s1">&#39;AGGGGCTCGCAGTGTAAGAA&#39;</span>
+<span class="n">Text2</span><span class="o">=</span><span class="s1">&#39;TCGGTAGATTGCGCCCACTC&#39;</span>
+<span class="n">LongestSubstring</span><span class="p">(</span><span class="n">Text1</span><span class="p">,</span> <span class="n">Text2</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>TCG
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA9F: Find the Shortest Non-Shared Substring of Two Strings</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">LongestSubString</span><span class="p">(</span><span class="n">Text1</span><span class="p">,</span> <span class="n">Text2</span><span class="p">):</span>
+    <span class="n">kmer</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">l</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="n">l</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">Text2</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Text2</span><span class="p">)</span><span class="o">-</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">Text2</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kmer</span><span class="p">:</span>
+                <span class="n">kmer</span><span class="o">+=</span><span class="p">[</span><span class="n">Text2</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">]]</span>
+        <span class="n">l</span><span class="o">+=</span><span class="mi">1</span>
+
+    <span class="n">ans</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">l</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="n">l</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">Text1</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Text1</span><span class="p">)</span><span class="o">-</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">Text1</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kmer</span><span class="p">:</span>
+                <span class="k">print</span> <span class="n">Text1</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">l</span><span class="p">]</span>
+                <span class="n">ans</span><span class="o">=</span><span class="mi">1</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">ans</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">l</span><span class="o">+=</span><span class="mi">1</span>
+
+<span class="n">Text1</span><span class="o">=</span><span class="s1">&#39;AGGGGCTCGCAGTGTAAGAA&#39;</span>
+<span class="n">Text2</span><span class="o">=</span><span class="s1">&#39;TCGGTAGATTGCGCCCACTC&#39;</span>
+<span class="n">LongestSubString</span><span class="p">(</span><span class="n">Text1</span><span class="p">,</span> <span class="n">Text2</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>AA
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA9G: Construct the Suffix Array of a String</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA9H: Pattern Matching with the Suffix Array</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">PatternMatching</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="n">Pattern</span><span class="p">):</span>
+    <span class="n">ans</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">Pattern</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">Text</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">Pattern</span><span class="p">[</span><span class="n">i</span><span class="p">])]:</span>
+                <span class="n">ans</span><span class="o">+=</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="n">ans</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">ans</span>
+    
+<span class="n">Text</span> <span class="o">=</span> <span class="s1">&#39;AATCGGGTTCAATCGGGGT&#39;</span>
+<span class="n">Pattern</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ATCG&#39;</span><span class="p">,</span><span class="s1">&#39;GGGT&#39;</span><span class="p">]</span>
+<span class="n">PatternMatching</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="n">Pattern</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1, 4, 11, 15]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA9I: Construct the Burrows-Wheeler Transform of a String</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">bw_transform</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">n</span><span class="p">]</span><span class="o">+</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span>
+    <span class="n">transfromeds</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">m</span><span class="p">])</span>
+    <span class="k">print</span> <span class="n">transfromeds</span>
+
+<span class="n">bw_transform</span><span class="p">(</span><span class="s2">&quot;GCGTGCCTGGTCA$&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>ACTGGCT$TGCGGC
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>BA9J: Reconstruct a String from its Burrows-Wheeler Transform</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">bw_restore</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+        <span class="n">X</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">Tx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">I</span><span class="p">),</span> <span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">Tx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">Tx</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="p">[</span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Tx</span><span class="p">]</span>
+    <span class="n">S</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+
+<span class="n">bw_restore</span><span class="p">(</span><span class="s2">&quot;TTCCTAACG$A&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>TACATCACGT$
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
